@@ -9,6 +9,8 @@
 #include <time.h>
 #include <string.h>
 
+void embaralhar(int array[], int tamanho);
+
 int main() {
     struct carta {
         int numero, naipe;
@@ -19,8 +21,17 @@ int main() {
     arma.numero = 0;
 
     int indice_carta = 0, cont = 15, game = 0, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
+    int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
 
     char nome_naipe[10];
+
+    printf("=====================================================\n");
+    printf("  ____                            _           _ \n");
+    printf(" / ___|  ___ ___  _   _ _ __   __| |_ __ ___| |\n");
+    printf(" \\___ \\ / __/ _ \\| | | | '_ \\ / _` | '__/ _ \\ |\n");
+    printf("  ___) | (_| (_) | |_| | | | | (_| | | |  __/ |\n");
+    printf(" |____/ \\___\\___/ \\__,_|_| |_|\\__,_|_|  \\___|_|\n");
+    printf("=====================================================\n");
 
     //========================= PREENCHENDO A MATRIZ DE CARTAS COM OS NÚMEROS E NAIPES =========================
 
@@ -37,14 +48,6 @@ int main() {
         }
     }
 
-    printf("=====================================================\n");
-    printf("  ____                            _           _ \n");
-    printf(" / ___|  ___ ___  _   _ _ __   __| |_ __ ___| |\n");
-    printf(" \\___ \\ / __/ _ \\| | | | '_ \\ / _` | '__/ _ \\ |\n");
-    printf("  ___) | (_| (_) | |_| | | | | (_| | | |  __/ |\n");
-    printf(" |____/ \\___\\___/ \\__,_|_| |_|\\__,_|_|  \\___|_|\n");
-    printf("=====================================================\n");
-
     for (int i = 0; i < 44; i++) {
         indices_emb[i] = i;
     }
@@ -56,11 +59,18 @@ int main() {
     }
 
     while (game == 0) {
-        for (int i = pos_cartas; i < pos_cartas+4; i++) {
+
+        for (int i = pos_cartas; i < pos_cartas+avanco; i++) {
+            // Inserindo as cartas do baralho embaralhado em cartas_atuais
             cartas_atuais[indice] = cartas_emb[i];
 
+            // Mudando o índice do array cartas_atuais
             indice++;
+        }
+
+        for (int i = pos_cartas; i < pos_cartas+4; i++) {
             
+            // Imprimindo o nome dos naipes de acordo com o valor de 0 a 3
             if (cartas_emb[i].naipe == 0) {
                 strcpy(nome_naipe, "Paus");
             } else if (cartas_emb[i].naipe == 1) {
@@ -71,12 +81,13 @@ int main() {
                 strcpy(nome_naipe, "Copas");
             }
 
+            // Imprimindo a carta
             printf("\n-------------------\n");
             printf("[%d]  %d   %s", indice, cartas_emb[i].numero, nome_naipe);
             printf("\n-------------------\n");
         }
 
-        pos_cartas += 4; // Avançando no baralho. O array de cartas atuais agora irá conter 4 cartas a frente das que ele continha
+        pos_cartas += avanco; // Avançando no baralho. O array de cartas atuais agora irá conter 4 cartas a frente das que ele continha
 
         printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         printf("Digite 1 para permanecer na sala ou 2 para pular: ");
@@ -88,7 +99,7 @@ int main() {
             for (int i = 0; i < 3; i++) {
                 scanf("%d", &escolha2);
 
-                escolha2--;
+                escolha2--; // Para funcionar como índice do array subtraimos 1 (afinal array começa em zero)
 
                 if (escolha2 > 3 || escolha2 < 0) {
                     printf("Escolha um valor valido.");
@@ -122,10 +133,20 @@ int main() {
                     printf("Pontuação: hdjtfgbdhfghgds");
                 }
 
+                cartas_atuais[escolha2].numero = 0; // Pra detectar que a carta foi escolhida
                 printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
             }
 
-            pulou = 0;
+            pulou = 0; // Define que não pulamos a sala
+            avanco = 3; // Define que agora vamos puxar só 3 cartas do deck
+            indice = 1; // Fazemos isso pra não sobrescrever a primeira carta em cartas_atuais
+
+            // Definimos que a carta que não foi usada vai pro começo da prox. sala
+            for (int i = 0; i < 4; i++) { 
+                if (cartas_atuais[i].numero != 0) {
+                    cartas_atuais[0] = cartas_atuais[i]; 
+                }
+            } 
         } else if (escolha1 == 2 && pulou == 0) {
             indice = 0;
 
@@ -134,8 +155,9 @@ int main() {
                 indice++;
             }
 
-            fim_bar += 4;
-            pulou = 1;
+            fim_bar += 4; // Aumenta o fim do baralho e as cartas que foram retiradas vão para o fim
+            pulou = 1; // Define que pulamos a sala
+            avanco = 4; // Define que serão retiradas 4 cartas do baralho (afinal jogamos as 4 cartas fora)
         } else  if (escolha1 > 2) {
             printf("\n-----------------------------------------------------------------\n");
             printf("Escolha um valor valido.");
