@@ -1,3 +1,4 @@
+// TEM QUE CONSERTAR O PROBLEMA DE DAR PRA ESCOLHER MAIS DE UMA VEZ A MESMA CARTA NA MESMA SALA
 // TEM QUE ADICIONAR UM SISTEMA DE PONTUAÇÃO
 // TEM QUE ADICIONAR UM MECANISMO QUE NÃO DEIXE O JOGADOR MATAR UM MONSTRO MAIS FORTE DO QUE O ANTERIOR COM A ARMA
 
@@ -20,6 +21,7 @@ int main() {
     int indice_carta = 0, cont = 15, game = 0, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
     int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
     int curou = 0; // Bool para verificar se a pessoa acabou de curar
+    int correto = 0; // Isso é pra verificar se a pessoa inseriu valores válidos
 
     char nome_naipe[10];
 
@@ -62,102 +64,115 @@ int main() {
 
     while (game == 0) {
 
-        for (int i = pos_cartas; i < pos_cartas+avanco; i++) {
-            // Inserindo as cartas do baralho embaralhado em cartas_atuais
-            cartas_atuais[indice] = cartas_emb[i];
+        // esse if correto == 0 serve para verificar se a jogada é válida. Ele só irá imprimiar a sala se a jogada for válida
+        if (correto == 0) {
 
-            // Mudando o índice do array cartas_atuais
-            indice++;
-        }
+            // Colocando todas as cartas da sala atual em um array
+            for (int i = pos_cartas; i < pos_cartas+avanco; i++) {
+                // Inserindo as cartas do baralho embaralhado em cartas_atuais
+                cartas_atuais[indice] = cartas_emb[i];
 
-        // Imprimindo o nome dos naipes de acordo com o valor de 0 a 3
-        // Imprimindo as cartas
-        for (int i = 0; i < 4; i++) {
-            if (cartas_atuais[i].naipe == 0) {
-                strcpy(nome_naipe, "Paus");
-            } else if (cartas_atuais[i].naipe == 1) {
-                strcpy(nome_naipe, "Espadas");
-            } else if (cartas_atuais[i].naipe == 2) {
-                strcpy(nome_naipe, "Ouros");
-            } else if (cartas_atuais[i].naipe == 3) {
-                strcpy(nome_naipe, "Copas");
+                // Mudando o índice do array cartas_atuais
+                indice++;
             }
 
-            printf("\n-------------------\n");
-            printf("[%d]  %d   %s", i+1, cartas_atuais[i].numero, nome_naipe);
-            printf("\n-------------------\n");
+            // Imprimindo o nome dos naipes de acordo com o valor de 0 a 3
+            // Imprimindo as cartas
+            for (int i = 0; i < 4; i++) {
+                if (cartas_atuais[i].naipe == 0) {
+                    strcpy(nome_naipe, "Paus");
+                } else if (cartas_atuais[i].naipe == 1) {
+                    strcpy(nome_naipe, "Espadas");
+                } else if (cartas_atuais[i].naipe == 2) {
+                    strcpy(nome_naipe, "Ouros");
+                } else if (cartas_atuais[i].naipe == 3) {
+                    strcpy(nome_naipe, "Copas");
+                }
+
+                printf("\n-------------------\n");
+                printf("[%d]  %d   %s", i+1, cartas_atuais[i].numero, nome_naipe);
+                printf("\n-------------------\n");
+            }
+
+            // Detectando se o jogo acabou
+            if (pos_cartas > fim_bar) {
+                printf("Parabéns, você ganhou!");
+                return 1;
+            }
+
+            printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         }
 
-        // Detectando se o jogo acabou
-        if (pos_cartas > fim_bar) {
-            printf("Parabéns, você ganhou!");
-            return 1;
-        }
-
-        printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         printf("Digite 1 para permanecer na sala ou 2 para pular: ");
         scanf("%d", &escolha1);
+
+        //========================= PEGANDO INPUT DE CARTAS ESCOLHIDAS =========================
 
         if (escolha1 == 1) {
             printf("Escolha com quais cartas interagir: ");
             
             for (int i = 0; i < 3; i++) {
                 scanf("%d", &escolha2);
-
                 escolha2--; // Para funcionar como índice do array subtraimos 1 (afinal array começa em zero)
 
-                if (escolha2 > 3 || escolha2 < 0) {
-                    printf("Escolha um valor valido.");
-                    return 1;
-                }
+                if (escolha2 >= 0 && escolha2 < 4) {
+                    if (escolha2 > 3 || escolha2 < 0) {
+                        printf("Escolha um valor valido.");
+                        return 1;
+                    }
 
-                if (cartas_atuais[escolha2].numero == 0) {
-                    printf("Carta ja selecionada.");
-                    return 0;
-                } else if (cartas_atuais[escolha2].naipe == 0) {
-                    if (arma.numero == 0) {
-                        vida -= cartas_atuais[escolha2].numero;
-                    } else if (arma.numero != 0) {
-                        if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
+                    if (cartas_atuais[escolha2].numero == 0) {
+                        printf("Carta ja selecionada.");
+                        return 0;
+                    } else if (cartas_atuais[escolha2].naipe == 0) {
+                        if (arma.numero == 0) {
+                            vida -= cartas_atuais[escolha2].numero;
+                        } else if (arma.numero != 0) {
+                            if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
+                                vida -= cartas_atuais[escolha2].numero - arma.numero;
+                            } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
+                                vida = vida;
+                            }
+                        }
+                    } else if (cartas_atuais[escolha2].naipe == 1) {
+                        if (arma.numero == 0) {
+                            vida -= cartas_atuais[escolha2].numero;
+                        } else if (arma.numero != 0) {
                             vida -= cartas_atuais[escolha2].numero - arma.numero;
-                        } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
+                        }
+                    } else if (cartas_atuais[escolha2].naipe == 2) {
+                        arma = cartas_atuais[escolha2];
+                    } else if (cartas_atuais[escolha2].naipe == 3) {
+                        if (curou == 0) {
+                            vida += cartas_atuais[escolha2].numero;
+                            curou = 1;
+                        } else {
                             vida = vida;
                         }
-                    }
-                } else if (cartas_atuais[escolha2].naipe == 1) {
-                    if (arma.numero == 0) {
-                        vida -= cartas_atuais[escolha2].numero;
-                    } else if (arma.numero != 0) {
-                        vida -= cartas_atuais[escolha2].numero - arma.numero;
-                    }
-                } else if (cartas_atuais[escolha2].naipe == 2) {
-                    arma = cartas_atuais[escolha2];
-                } else if (cartas_atuais[escolha2].naipe == 3) {
-                    if (curou == 0) {
-                        vida += cartas_atuais[escolha2].numero;
-                        curou = 1;
-                    } else {
-                        vida = vida;
+
+                        if (vida > 20) {
+                            vida = 20;
+                        }
                     }
 
-                    if (vida > 20) {
-                        vida = 20;
+                    if (vida < 1) {
+                        printf("Game over :(\n");
+                        printf("Pontuação: 1");
+                        return 0;
                     }
+
+                    cartas_atuais[escolha2].numero = 0; // Pra detectar que a carta foi escolhida
+                    printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
+                } else {
+                    i--;
+                    printf("Escolha um valor valido.\n");
                 }
-
-                if (vida < 1) {
-                    printf("Game over :(\n");
-                    printf("Pontuação: 1");
-                    return 0;
-                }
-
-                cartas_atuais[escolha2].numero = 0; // Pra detectar que a carta foi escolhida
-                printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
             }
 
             pulou = 0; // Define que não pulamos a sala
             avanco = 3; // Define que agora vamos puxar só 3 cartas do deck
             indice = 1; // Fazemos isso pra não sobrescrever a primeira carta em cartas_atuais
+            correto = 0;
 
             // Definimos que a carta que não foi usada vai pro começo da prox. sala
             for (int i = 0; i < 4; i++) { 
@@ -166,6 +181,8 @@ int main() {
                 }
             }
 
+            curou = 0; // Agora pode curar de novo
+            pos_cartas += avanco; // Avançando no baralho. O array de cartas atuais agora irá conter 4 cartas a frente das que ele continha
         } else if (escolha1 == 2 && pulou == 0) {
             indice = 0;
 
@@ -177,18 +194,20 @@ int main() {
             fim_bar += 4; // Aumenta o fim do baralho e as cartas que foram retiradas vão para o fim
             pulou = 1; // Define que pulamos a sala
             avanco = 4; // Define que serão retiradas 4 cartas do baralho (afinal jogamos as 4 cartas fora)
-        } else  if (escolha1 > 2) {
+
+            curou = 0; // Agora pode curar de novo
+            pos_cartas += avanco; //Avançando no baralho
+
+            correto = 0;
+        } else  if (escolha1 > 2 || escolha1 < 1) {
             printf("\n-----------------------------------------------------------------\n");
-            printf("Escolha um valor valido.");
-            return 1;
+            printf("Escolha um valor valido.\n");
+            correto = 1;
         } else if (pulou == 1) {
             printf("\n-----------------------------------------------------------------\n");
-            printf("Nao pode pular essa sala pois a anterior ja foi pulada!");
-            return 1;
+            printf("Nao pode pular essa sala pois a anterior ja foi pulada!\n");
+            correto = 1;
         }
-
-        curou = 0; // Agora pode curar de novo
-        pos_cartas += avanco; // Avançando no baralho. O array de cartas atuais agora irá conter 4 cartas a frente das que ele continha
     }
 
     return 0;
