@@ -16,7 +16,7 @@ int main() {
 
     struct carta cartas[44], cartas_emb[88], cartas_atuais[4];
     struct carta arma;
-    arma.numero = 0;
+    arma.numero = 0; // Inicializando a arma em zero
 
     int indice_carta = 0, cont = 15, game = 0, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
     int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
@@ -47,6 +47,8 @@ int main() {
         }
     }
 
+    //========================= CRIANDO INDICES ALEATORIOS E USANDO ELES PARA EMBARALHAR O ARRAY CARTAS_EMB =========================
+
     for (int i = 0; i < 44; i++) {
         indices_emb[i] = i;
     }
@@ -56,6 +58,8 @@ int main() {
     for (int i = 0; i < 44; i++) {
         cartas_emb[indices_emb[i]] = cartas[i];
     }
+
+    //========================= PARTE DO JOGO: LOOP PRINCIPAL =========================
 
     while (game == 0) {
 
@@ -85,6 +89,12 @@ int main() {
             printf("\n-------------------\n");
         }
 
+        // Detectando se o jogo acabou
+        if (pos_cartas > fim_bar) {
+            printf("Parabéns, você ganhou!");
+            return 1;
+        }
+
         printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         printf("Digite 1 para permanecer na sala ou 2 para pular: ");
         scanf("%d", &escolha1);
@@ -102,7 +112,10 @@ int main() {
                     return 1;
                 }
 
-                if (cartas_atuais[escolha2].naipe == 0) {
+                if (cartas_atuais[escolha2].numero == 0) {
+                    printf("Carta ja selecionada.");
+                    return 0;
+                } else if (cartas_atuais[escolha2].naipe == 0) {
                     if (arma.numero == 0) {
                         vida -= cartas_atuais[escolha2].numero;
                     } else if (arma.numero != 0) {
@@ -127,11 +140,16 @@ int main() {
                     } else {
                         vida = vida;
                     }
+
+                    if (vida > 20) {
+                        vida = 20;
+                    }
                 }
 
                 if (vida < 1) {
                     printf("Game over :(\n");
                     printf("Pontuação: 1");
+                    return 0;
                 }
 
                 cartas_atuais[escolha2].numero = 0; // Pra detectar que a carta foi escolhida
@@ -147,10 +165,6 @@ int main() {
                 if (cartas_atuais[i].numero != 0) {
                     cartas_atuais[0] = cartas_atuais[i]; 
                 }
-            } 
-
-            if (vida > 20) {
-                vida = 20;
             }
 
         } else if (escolha1 == 2 && pulou == 0) {
