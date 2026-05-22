@@ -136,7 +136,11 @@ int main() {
                         if (arma.numero == 0) {
                             vida -= cartas_atuais[escolha2].numero;
                         } else if (arma.numero != 0) {
-                            vida -= cartas_atuais[escolha2].numero - arma.numero;
+                            if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
+                                vida -= cartas_atuais[escolha2].numero - arma.numero;
+                            } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
+                                vida = vida;
+                            }
                         }
                     } else if (cartas_atuais[escolha2].naipe == 2) {
                         arma = cartas_atuais[escolha2];
