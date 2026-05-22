@@ -1,7 +1,3 @@
-// TEM QUE CONSERTAR O PROBLEMA DE DAR PRA ESCOLHER MAIS DE UMA VEZ A MESMA CARTA NA MESMA SALA
-// TEM QUE ADICIONAR UM SISTEMA DE PONTUAÇÃO
-// TEM QUE ADICIONAR UM MECANISMO QUE NÃO DEIXE O JOGADOR MATAR UM MONSTRO MAIS FORTE DO QUE O ANTERIOR COM A ARMA
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -22,6 +18,7 @@ int main() {
     int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
     int curou = 0; // Bool para verificar se a pessoa acabou de curar
     int correto = 0; // Isso é pra verificar se a pessoa inseriu valores válidos
+    int pontuacao = 0;
 
     char nome_naipe[10];
 
@@ -97,6 +94,7 @@ int main() {
             // Detectando se o jogo acabou
             if (pos_cartas > fim_bar) {
                 printf("Parabéns, você ganhou!");
+                printf("Pontuacao: %d", vida);
                 return 1;
             }
 
@@ -154,10 +152,20 @@ int main() {
                             vida = 20;
                         }
                     }
-
+                    
+                    // =========================================== Caso o jogador perca =========================================== 
                     if (vida < 1) {
+                        pontuacao = vida;
+                        
                         printf("Game over :(\n");
-                        printf("Pontuação: 1");
+
+                        for (int i = pos_cartas+indice; i < fim_bar; i++) {
+                            if (cartas_emb[i].naipe == 0 || cartas_emb[i].naipe == 1) {
+                                pontuacao = pontuacao - cartas_emb[i].numero;
+                            }
+                        } 
+
+                        printf("Pontuação: %d", pontuacao);
                         return 0;
                     }
 
