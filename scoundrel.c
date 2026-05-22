@@ -101,12 +101,14 @@ int main() {
             printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         }
 
+        printf("=================================================================\n");
         printf("Digite 1 para permanecer na sala ou 2 para pular: ");
         scanf("%d", &escolha1);
 
         //========================= PEGANDO INPUT DE CARTAS ESCOLHIDAS =========================
 
         if (escolha1 == 1) {
+            printf("=================================================================\n");
             printf("Escolha com quais cartas interagir: ");
             
             for (int i = 0; i < 3; i++) {
@@ -115,11 +117,13 @@ int main() {
 
                 if (escolha2 >= 0 && escolha2 < 4) {
                     if (escolha2 > 3 || escolha2 < 0) {
+                        printf("=================================================================\n");
                         printf("Escolha um valor valido.");
                         return 1;
                     }
 
                     if (cartas_atuais[escolha2].numero == 0) {
+                        printf("=================================================================\n");
                         printf("Carta ja selecionada.");
                         return 0;
                     } else if (cartas_atuais[escolha2].naipe == 0) {
@@ -174,9 +178,17 @@ int main() {
                     }
 
                     cartas_atuais[escolha2].numero = 0; // Pra detectar que a carta foi escolhida
-                    printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
+
+                    // Printando a vida e a arma do jogador, exceto para a última iteração do loop, porque ficaria repetitivo
+                    if (i < 2) {
+                        printf("=================================================================\n");
+                        printf("Vida: %d || Arma: %d\n", vida, arma.numero);
+                    } else {
+                        printf("=================================================================\n");
+                    }
                 } else {
                     i--;
+                    printf("=================================================================\n");
                     printf("Escolha um valor valido.\n");
                 }
             }
@@ -210,13 +222,14 @@ int main() {
             curou = 0; // Agora pode curar de novo
             pos_cartas += avanco; //Avançando no baralho
 
-            correto = 0;
+            correto = 0; // Mostra que o jogador fez uma escolha válida
+            indice = 0;
         } else  if (escolha1 > 2 || escolha1 < 1) {
-            printf("\n-----------------------------------------------------------------\n");
+            printf("=================================================================\n");
             printf("Escolha um valor valido.\n");
             correto = 1;
         } else if (pulou == 1) {
-            printf("\n-----------------------------------------------------------------\n");
+            printf("=================================================================\n");
             printf("Nao pode pular essa sala pois a anterior ja foi pulada!\n");
             correto = 1;
         }
