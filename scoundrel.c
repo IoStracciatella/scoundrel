@@ -19,6 +19,7 @@ int main() {
     int curou = 0; // Bool para verificar se a pessoa acabou de curar
     int correto = 0; // Isso é pra verificar se a pessoa inseriu valores válidos
     int pontuacao = 0;
+    int inicio = 1; // Mostra que é o início do jogo
 
     char nome_naipe[10];
 
@@ -95,7 +96,7 @@ int main() {
             if (pos_cartas > fim_bar) {
                 printf("Parabéns, você ganhou!");
                 printf("Pontuacao: %d", vida);
-                return 1;
+                return 0;
             }
 
             printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
@@ -111,20 +112,14 @@ int main() {
             printf("=================================================================\n");
             printf("Escolha com quais cartas interagir: ");
             
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) { // 3 iterações pra selecionar 3 cartas
                 scanf("%d", &escolha2);
                 escolha2--; // Para funcionar como índice do array subtraimos 1 (afinal array começa em zero)
 
                 if (escolha2 >= 0 && escolha2 < 4) {
-                    if (escolha2 > 3 || escolha2 < 0) {
-                        printf("=================================================================\n");
-                        printf("Escolha um valor valido.");
-                        return 1;
-                    }
-
                     if (cartas_atuais[escolha2].numero == 0) {
                         printf("=================================================================\n");
-                        printf("Carta ja selecionada.");
+                        printf("Carta ja selecionada.\n");
                         return 0;
                     } else if (cartas_atuais[escolha2].naipe == 0) {
                         if (arma.numero == 0) {
@@ -194,7 +189,15 @@ int main() {
             }
 
             pulou = 0; // Define que não pulamos a sala
-            avanco = 3; // Define que agora vamos puxar só 3 cartas do deck
+
+            // Define que agora vamos puxar só 3 cartas do deck
+            if (inicio = 1) {
+                inicio = 0;
+                avanco = 4;
+            } else {
+                avanco = 3;
+            }
+
             indice = 1; // Fazemos isso pra não sobrescrever a primeira carta em cartas_atuais
             correto = 0;
 
@@ -241,11 +244,10 @@ int main() {
 // Criando a função que embaralha
 void embaralhar(int array[], int tamanho) {
   // Semeando número aleatório
-  srand( time(NULL) );
+  srand(time(NULL));
   
   // Trocando de ordem
-  for (int i = 0; i < tamanho; i++)
-  {
+  for (int i = 0; i < tamanho; i++) {
     // Achando aleatoriamente um índice de 0 até "tamanho"
     int troca_indice = rand() % tamanho;
     
