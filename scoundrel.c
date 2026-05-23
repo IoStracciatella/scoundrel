@@ -14,16 +14,16 @@ int main() {
     struct carta arma;
     arma.numero = 0; // Inicializando a arma em zero
 
-    int indice_carta = 0, cont = 15, game = 0, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
+    int indice_carta = 0, cont = 15, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
     int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
     int curou = 0; // Bool para verificar se a pessoa acabou de curar
     int correto = 0; // Isso é pra verificar se a pessoa inseriu valores válidos
     int pontuacao = 0;
     int inicio = 1; // Mostra que é o início do jogo
+    int monstro = 15; // Define quais monstros o jogador pode matar com a arma
 
     char nome_naipe[10];
 
-    printf("=====================================================\n");
     printf("  ____                            _           _ \n");
     printf(" / ___|  ___ ___  _   _ _ __   __| |_ __ ___| |\n");
     printf(" \\___ \\ / __/ _ \\| | | | '_ \\ / _` | '__/ _ \\ |\n");
@@ -60,7 +60,7 @@ int main() {
 
     //========================= PARTE DO JOGO: LOOP PRINCIPAL =========================
 
-    while (game == 0) {
+    while (pos_cartas < fim_bar) {
 
         // esse if correto == 0 serve para verificar se a jogada é válida. Ele só irá imprimiar a sala se a jogada for válida
         if (correto == 0) {
@@ -92,13 +92,6 @@ int main() {
                 printf("\n-------------------\n");
             }
 
-            // Detectando se o jogo acabou
-            if (pos_cartas > fim_bar) {
-                printf("Parabéns, você ganhou!");
-                printf("Pontuacao: %d", vida);
-                return 0;
-            }
-
             printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
         }
 
@@ -125,24 +118,37 @@ int main() {
                         if (arma.numero == 0) {
                             vida -= cartas_atuais[escolha2].numero;
                         } else if (arma.numero != 0) {
-                            if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
-                                vida -= cartas_atuais[escolha2].numero - arma.numero;
-                            } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
-                                vida = vida;
+                            if (cartas_atuais[escolha2].numero < monstro) {
+                                monstro = cartas_atuais[escolha2].numero;
+
+                                if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
+                                    vida -= cartas_atuais[escolha2].numero - arma.numero;
+                                } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
+                                    vida = vida;
+                                }
+                            } else {
+                                vida -= cartas_atuais[escolha2].numero;
                             }
                         }
                     } else if (cartas_atuais[escolha2].naipe == 1) {
                         if (arma.numero == 0) {
                             vida -= cartas_atuais[escolha2].numero;
                         } else if (arma.numero != 0) {
-                            if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
-                                vida -= cartas_atuais[escolha2].numero - arma.numero;
-                            } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
-                                vida = vida;
+                            if (cartas_atuais[escolha2].numero < monstro) {
+                                monstro = cartas_atuais[escolha2].numero;
+
+                                if (cartas_atuais[escolha2].numero - arma.numero >= 0) {
+                                    vida -= cartas_atuais[escolha2].numero - arma.numero;
+                                } else if (cartas_atuais[escolha2].numero - arma.numero < 0) {
+                                    vida = vida;
+                                }
+                            } else {
+                                vida -= cartas_atuais[escolha2].numero;
                             }
                         }
                     } else if (cartas_atuais[escolha2].naipe == 2) {
                         arma = cartas_atuais[escolha2];
+                        monstro = 15;
                     } else if (cartas_atuais[escolha2].naipe == 3) {
                         if (curou == 0) {
                             vida += cartas_atuais[escolha2].numero;
@@ -191,7 +197,7 @@ int main() {
             pulou = 0; // Define que não pulamos a sala
 
             // Define que agora vamos puxar só 3 cartas do deck
-            if (inicio = 1) {
+            if (inicio == 1) {
                 inicio = 0;
                 avanco = 4;
             } else {
@@ -237,6 +243,9 @@ int main() {
             correto = 1;
         }
     }
+
+    printf("Parabéns, você ganhou!");
+    printf("Pontuacao: %d", vida);
 
     return 0;
 }
