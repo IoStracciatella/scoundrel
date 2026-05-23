@@ -1,3 +1,40 @@
+/*
+Vou explicar de forma breve como o código funciona com um textinho aqui em cima, porque eu me perdi com os comentários (muita coisa pra explicar)
+
+O jogo começa assim: Um struct que define o que uma carta armazena é criado, depois um array desse scruct é criado. Esse array contém as cartas
+numeradas de 2 a 14 para paus e espadas, e de 2 a 10 para ouros e copas. Os naipes são definidos por número de 0 a 3, 0 = paus, 1 = espadas, 2 =
+ouros, 3 = copas. Em seguida, é criado um array com números aleatórios sem repetição, usando uma função que faz um shuffle no array sem deixar
+repetir nenhum número. A função é definida abaixo do int main(). Os números aleatórios contidos nesse array são utilizados como índices para re-
+ordenar o array de struct que continha as cartas. Agora vem o loop principal, que vai rodar até que a posição das cartas atuais do baralho seja
+maior que o tamanho do baralho em si. Esses índices são definidos por pos_cartas e fim_bar, pos_cartas define em qual posição estamos no baralho
+quantas cartas a gente já passou. fim_bar define onde é o fim do baralho. Por padrão, o fim é na carta 44, mas se o jogador pular uma sala, o fim
+do baralho é estendido em 4 cartas, afinal elas vão pro fim. No início do loop principal ele verifica se a jogada é válida, usando o valor de 
+"correto", em seguida as cartas retiradas do baralho são colocadas na mão do jogador, na primeira vez são retiradas 4 cartas, nas demais vezes, 3
+porque sempre sobra uma carta da sala anterior. A não ser que o jogador pule a sala, ai ele vai retirar 4 cartas. Tem a varivael indice que serve
+pra sempre variar os valores do indice array que armazena as cartas atuais entre 0 e 3, ou 1 e 3 pra não sobrescrever a carta que fica sobrando.
+O código em seguida imprime as cartas e passa para a verificação de valores que o usuário inserir. Se o usuário inserir o índice uma carta que é
+um monstro, o programa subtrai a vida do monstro da vida do jogador, se ele tivere uma arma subtrai a arma da vida do monstro. Se a carta for
+ouros, ele seleciona a carta como arma. Se for copas, ele soma na vida, tomando cuidado pra não passar de 20. Se a vida for menor que 20, acabou
+o jogo. Depois, para sabermos com quais cartas o usuário interagiu, as cartas com as quais o usuário interage tem seu número trocado por 0. Depo-
+is o programa seta todas as variáveis necessárias para o funcionamento para o seu devido valor, tipo a variável pos_cartas é incrementada em 4, 
+a variável que define se o usuário pulou a sala vira zero etc. E por fim ele identifica quais cartas tem numero zero, a que não tiver é a que o
+usuário não interagiu, então ela vai pra proxima sala. Caso o usuário tenha escolhido pular, um loop for varre o array de cartas atuais e coloca
+elas no fim do baralho, e estende o fim do baralho. Caso os valores que o usuário inseriu sejam inválidos, o programa vai ficar pedindo pra inse-
+rir o valor até ele colocar um valor certo. Se pos_cartas for maior que fim_bar, pronto, o usuário ganhou, porque passou do fim do baralho. 
+Quando ele ganha, o programa acaba e a vida do jogador é a pontuação. Esqueci de falar antes, mas caso o jogador perca, o programa varre o bara-
+lho para identificar monstros e subtrair a vida de todos eles da vida do usuário. Essa é a pontuação caso você perca. Foi difícil fazer esse tra-
+balho. Meu Deus.
+
+Comentário adicional:
+O código ficou horrível. Mesmo eu dando meu melhor. Só que eu não usei GPT, não usei Gemini, não usei deepseek nem nenhuma IA. Eu to falando isso
+porque eu acho que esse mérito deveria ser considerado. Boa parte da sala nem vai ler o enunciado, só vai jogar o PDF da atividade em alguma IA
+copiar e colar o código que a IA fizer e te entregar. O problema é que esses códigos feitos por IA vão ficar perfeitos, super otimizados, inden-
+-tados perfeitamente, etc. A qualidade do código médio que a sala vai entregar vai subir, MUITO, e meu código, na contramão, não é perfeito. Com-
+parado a um código feito por IA, ou com ajuda de IA, meu código deve ter ficado tosco. Mas peço que seja considerado meu esforço. Peço que seja
+considerado que o código foi feito 100% por um ser humano (eu). Não quero nota adicional por isso, só quero não perder nota porque o código médio
+da sala ficou perfeito, porque boa parte das pessoas usou IA
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -13,7 +50,7 @@ int main() {
     struct carta cartas[44], cartas_emb[88], cartas_atuais[4];
     struct carta arma;
     arma.numero = 0; // Inicializando a arma em zero
-
+    
     int indice_carta = 0, cont = 15, vida = 20, pos_cartas = 0, indice = 0, fim_bar = 44, pulou = 0, escolha1, escolha2, indices_emb[44];
     int avanco = 4; // Define o tanto de cartas que são retiradas do baralho
     int curou = 0; // Bool para verificar se a pessoa acabou de curar
