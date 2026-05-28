@@ -126,9 +126,47 @@ int main() {
                     strcpy(nome_naipe, "Copas");
                 }
 
-                printf("\n-------------------\n");
-                printf("[%d]  %d   %s", i+1, cartas_atuais[i].numero, nome_naipe);
-                printf("\n-------------------\n");
+                if (cartas_atuais[i].naipe == 0) {
+                    printf(".--------.\n"
+                           "| P.--.  |\n"
+                           "|  :():  |\n"
+                           "|  ()()  |\n"
+                           "|  '--'P |\n"
+                           "`--------'\n");
+
+                    printf("\n[%d]: %d de %s", i+1, cartas_atuais[i].numero, nome_naipe);
+                    printf("\n-------------------\n");
+                } else if (cartas_atuais[i].naipe == 1) {
+                    printf(".--------.\n"
+                           "| E.--.  |\n"
+                           "|  :/\\: |\n"
+                           "|  (__)  |\n"
+                           "|  '--'E |\n"
+                           "`--------'\n");
+
+                    printf("\n[%d]: %d de %s", i+1, cartas_atuais[i].numero, nome_naipe);
+                    printf("\n-------------------\n");
+                } else if (cartas_atuais[i].naipe == 2) {
+                    printf(".--------.\n"
+                           "| O.--.  |\n"
+                           "|  :/\\:  |\n"
+                           "|  :\\/:  |\n"
+                           "|  '--'O |\n"
+                           "`--------'\n");
+
+                    printf("\n[%d]: %d de %s", i+1, cartas_atuais[i].numero, nome_naipe);
+                    printf("\n-------------------\n");
+                } else if (cartas_atuais[i].naipe == 3) {
+                    printf(".--------.\n"
+                           "| C.--.  |\n"
+                           "|  (\\/)  |\n"
+                           "|  :\\/:  |\n"
+                           "|  '--'C |\n"
+                           "`--------'\n");
+
+                    printf("\n[%d]: %d de %s", i+1, cartas_atuais[i].numero, nome_naipe);
+                    printf("\n-------------------\n");
+                }
             }
 
             printf("\nVida: %d || Arma: %d\n", vida, arma.numero);
