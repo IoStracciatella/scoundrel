@@ -1,5 +1,7 @@
 # OUTRAS REGRAS PARA A NOVA VERSÃO:
-- tem que usar função
+- Tem que usar função pra organizar o código
+- Tem que ter opção de jogar contra o computador ou o computador jogar sozinho
+- Você que tem que dar o comando pro computador fazer a jogada (tipo apertar enter)
 
 # Com o objetivo de promover boas práticas de programação, é expressamente proibida a
 
