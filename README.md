@@ -1,3 +1,6 @@
+# OUTRAS REGRAS PARA A NOVA VERSÃO:
+- tem que usar função
+
 # Com o objetivo de promover boas práticas de programação, é expressamente proibida a
 
 utilização dos seguintes recursos de programação: comando goto, comando continue, co-
