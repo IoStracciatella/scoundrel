@@ -2,6 +2,7 @@
 - Tem que usar função pra organizar o código
 - Tem que ter opção de jogar contra o computador ou o computador jogar sozinho
 - Você que tem que dar o comando pro computador fazer a jogada (tipo apertar enter)
+- A gente vai ter que consertar todos os erros que tinha no código anterior
 
 # Com o objetivo de promover boas práticas de programação, é expressamente proibida a
 
