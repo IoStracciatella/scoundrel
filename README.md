@@ -5,7 +5,6 @@
 - Você que tem que dar o comando pro computador fazer a jogada (tipo apertar enter)
 - A gente vai ter que consertar todos os erros que tinha no código anterior
 - Beta test mais rigoroso dessa vez hein
-- caio
 
 # Com o objetivo de promover boas práticas de programação, é expressamente proibida a
 
