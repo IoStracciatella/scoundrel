@@ -1,4 +1,4 @@
-# OUTRAS REGRAS PARA A NOVA VERSÃO:
+jhju# OUTRAS REGRAS PARA A NOVA VERSÃO:
 - Tem que usar função pra organizar o código
 - Tem que reorganizar as variáveis também
 - Tem que ter opção de jogar contra o computador ou o computador jogar sozinho
