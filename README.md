@@ -18,4 +18,3 @@ para definir uma sequência de comandos, a definição de uma função dentro de
 de laços com condições que são sempre verdadeiras (como while (1) ou while (x == x)) e o uso
 de comandos/recursos que não foram vistos em aula. O uso de recursos proibidos acarretará
 em nota 0 (zero) no trabalho.
-asasasasasasasasasasasasasas
