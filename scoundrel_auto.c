@@ -8,6 +8,8 @@
 // A Re e o Caio vão ter que fazer um beta test mais rigoroso
 // TEM QUE COLOCAR O NOME DOS PARTICIPANTES
 
+// Vamo mentir que a gente usou IA só em um trecho específico, pra disfarçar que o código inteiro foi feito com IA
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
