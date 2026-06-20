@@ -1,20 +1,54 @@
 // Caio Brun de Olivera - 17882570
 // Lucas Cordeiro Gatti - 15746427
-// Re Martins Brant
+// Re Martins Brant - 17080231
 
-// Atenção que agora a gente vai ter que usar funções
-// Seria bom reaproveitar o código antigo
-// Tem que consertar os problemas no seu código: Tem que mostrar o que acontece em cada turno, tem que mostrar o limite da arma, tem que consertar o fim do baralho
-// A Re e o Caio vão ter que fazer um beta test mais rigoroso
-// TEM QUE COLOCAR O NOME DOS PARTICIPANTES
+/*
 
-// Vamo mentir que a gente usou IA só em um trecho específico, pra disfarçar que o código inteiro foi feito com IA
+Na versão em que o computador joga sozinho, as jogadas serão escolhidas pelo próprio programa. 
+Depois que a Mesa é mostrada na tela, o programa espera o usuário digitar uma instrução para o computador fazer o próximo movimento. Isso servirá para que quem esteja assistindo consiga acompanhar o que está acontecendo, em vez do jogo rodar de uma vez só.
+Primeiramente, o nosso algoritmo verificará se é uma boa decisão evitar a Sala. Para fazer isso, ele olha as cartas que estão na Sala e calcula uma estimativa de dano procurando as cartas que são monstros, ou seja, paus e espadas, e vê quanto de vida perderia ao enfrentar esses inimigos. 
+
+
+Caso ele tenha uma arma equipada e poder usufruí-la contra o monstro, o dano considerado será o valor do monstro subtraído do valor da arma. Se esse valor ficar negativo, o dano será zero. No cenário da estimativa de dano for maior ou igual à vida atual e ainda for possível evitar a Sala, o computador irá evitá-la. 
+Nesse caso, as cartas da Sala irão para o fundo da Masmorra.
+
+Se o computador não evitar a Sala, ele começará a escolher as cartas as quais irá interagir. 
+A escolha segue uma ordem de prioridade: Primeiro, ele procura uma poção de copas, mas só a usará se sua vida estiver menor que 20 pontos, isso se ainda não tiver usado outra poção naquele turno. 
+
+Caso tenha mais de uma poção disponível, ele escolhe a de maior valor, porque será a mais vantajosa para recuperar vida.
+
+Caso não haja poção útil, o algoritmo procurará uma arma de Ouros. 
+
+Assim, ele dará preferência para armas mais vantajosas que a atual. Então, na jogada em que houver uma arma com valor maior do que a equipada, ele escolherá essa nova arma. 
+
+Quando uma nova arma é equipada, a anterior será descartada e o limite da arma voltará a ficar sem limite, pois ela ainda não foi usada contra nenhum monstro.
+Se não obtiver poção útil nem arma melhor, o programa procurará um monstro para enfrentar. Nessa parte, ele tentará escolher um monstro que causará o menor dano possível. 
+
+Para cada monstro da Sala, o computador calculará quanto dano ele receberia se estivesse lutando sem armas. 
+Depois, se tiver alguma arma equipada e se o valor do monstro for menor que o limite da arma, ele também terá calculado quanto dano receberia usando a arma. 
+
+No cenário em que usar a arma causa menos dano, ele escolherá usar a arma. Caso não obtiver sucesso, ele lutará sem a arma.
+
+Após o computador escolher uma carta, o algoritmo resolverá a jogada. Se a carta for monstro, ele perderá vida de acordo com o combate. 
+Se ele tiver usado a arma, o limite dela passará a ser o valor daquele monstro, isso porque a partir daí a arma só poderá ser usada contra monstros menores. 
+No caso da carta for uma arma, ela virará a nova arma equipada. Se a carta for poção, ela recuperará vida, mas sem deixar passar de 20 pontos. 
+Se uma poção já tiver sido usada no mesmo turno, a próxima poção será descartada sem curar.
+
+No final de cada jogada, o programa mostrará o que aconteceu e atualiza a Mesa. 
+Então aparecerão novamente a vida atual, a arma equipada, o limite da arma, a Sala atual, a Masmorra e a possibilidade de ainda ser possível evitar a Sala. 
+Se a vida chegar a um valor nulo ou menos, o algoritmo perde e o jogo acaba. Se a Masmorra acabar e a vida ainda for maior que 0, o algoritmo vence.
+Logo, em suma, o computador deve jogar olhando a situação atual da Mesa e escolher uma jogada válida. 
+Ele tentará evitar a Sala quando ela parecer perigosa demais, usará poções quando precisar curar, equipará armas mais otimizadas quando aparecerem e enfrentará os monstros tentando receber o menor dano possível.
+
+*/
+
+//NOTA ADICIONAL: utilizamos IA (Claude) para auxiliar na resolução do bug que fazia o programa sortear cartas que não existiam após o fim do jogo.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-// Struct simples para guardar valor e naipe da carta
+//struct simples para guardar valor e naipe da carta
 struct carta {
     int numero;
     int naipe;
@@ -60,7 +94,7 @@ int main() {
     int i = 0;
     int j = 0;
 
-    // Estado inicial do jogo
+    //aqui temos o estado inicial do jogo
     arma.numero = 0;
     arma.naipe = 2;
 
@@ -68,7 +102,7 @@ int main() {
 
     mostrar_titulo();
 
-    // Monta o baralho e prepara a Masmorra embaralhada
+    //monta o baralho e prepara a Masmorra embaralhada
     montar_baralho(cartas);
 
     for (i = 0; i < 44; i++) {
@@ -96,7 +130,7 @@ int main() {
     }
 
     while (jogo_ativo == 1 && vida > 0) {
-        // Completa a sala até quatro cartas sem passar do fim da Masmorra
+        //completa a sala até quatro cartas sem passar do fim da Masmorra
         while (quantidade_sala < 4 && pos_masmorra < fim_masmorra) {
             sala[quantidade_sala] = masmorra[pos_masmorra];
             quantidade_sala++;
@@ -112,7 +146,7 @@ int main() {
             fugir_sala = 0;
 
             if (modo_jogo == 1) {
-                // A pessoa escolhe se vai enfrentar ou evitar a sala
+                //messe passo, a pessoa escolhe se vai enfrentar ou evitar a Sala
                 entrada_valida = 0;
 
                 while (entrada_valida == 0) {
@@ -135,7 +169,7 @@ int main() {
                     }
                 }
             } else {
-                // O computador espera uma instrução antes de decidir o movimento
+                //aqui o algoritmo espera uma instrução antes de decidir o movimento
                 instrucao_valida = 0;
 
                 while (instrucao_valida == 0) {
@@ -170,7 +204,7 @@ int main() {
                     }
                 }
 
-                // Ele evita a sala se o dano estimado puder matar
+                //o computador evita a Sala se o dano estimado puder mata-lo
                 if (dano_estimado >= vida && pode_evitar == 1 && quantidade_sala == 4) {
                     fugir_sala = 1;
                 }
@@ -206,7 +240,7 @@ int main() {
                     cartas_para_resolver = quantidade_sala;
                 }
 
-                // Resolve uma carta por vez e mostra a mesa atualizada
+                //resolve uma carta por vez e mostra a mesa atualizada
                 while (jogadas_feitas < cartas_para_resolver && vida > 0 && quantidade_sala > 0 && jogo_ativo == 1) {
                     carta_escolhida = -1;
                     usar_arma = 0;
@@ -340,7 +374,7 @@ int main() {
                         carta_escolhida = indice_melhor_carta;
                     }
 
-                    // Agora a carta escolhida é resolvida de acordo com o naipe
+                    //agora a carta escolhida eh resolvida de acordo com o naipe
                     carta_jogada = sala[carta_escolhida];
 
                     if (carta_jogada.naipe == 0 || carta_jogada.naipe == 1) {
@@ -404,7 +438,7 @@ int main() {
                         }
                     }
 
-                    // Remove da sala a carta que acabou de ser resolvida
+                    //remove da sala a carta que acabou de ser resolvida
                     for (j = carta_escolhida; j < quantidade_sala - 1; j++) {
                         sala[j] = sala[j + 1];
                     }
@@ -458,7 +492,7 @@ void mostrar_titulo() {
 }
 
 void montar_baralho(struct carta cartas[]) {
-    // Paus e espadas vão até A, ouros e copas vão até 10
+    //paus e espadas vão até A, ouros e copas vão até 10
     int indice_carta = 0;
     int naipe = 0;
     int numero = 0;
@@ -480,7 +514,7 @@ void montar_baralho(struct carta cartas[]) {
 }
 
 void embaralhar(int indices[], int tamanho) {
-    // Troca posições aleatórias do vetor de índices
+    //troca posições aleatórias do vetor de índices
     int i = 0;
     int indice_troca = 0;
     int guardar = 0;
@@ -552,7 +586,7 @@ void mostrar_carta(struct carta carta_atual, int indice) {
 }
 
 void mostrar_mesa(struct carta sala[], int quantidade_sala, int vida, struct carta arma, int limite_arma, int pode_evitar, int modo_jogo, int pos_masmorra, int fim_masmorra) {
-    // Mostra tudo que a pessoa precisa saber para acompanhar a partida
+    //mostra tudo que a pessoa precisa saber para acompanhar a partida
     int i = 0;
 
     printf("\n========================= MESA =========================\n");
