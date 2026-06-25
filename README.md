@@ -1,7 +1,7 @@
 # Projeto de Jogo de Scoundrel
 
-A utilização dos seguintes recursos de programação: comando goto, comando continue, co-
-mando break e variáveis globais. É permitido o uso do comando break somente junto ao comando
+A utilização dos seguintes recursos de programação foi proibida durante a criação do programa: Comando goto, comando continue, co-
+mando break e variáveis globais. Foi permitido o uso do comando break somente junto ao comando
 
 switch-case. Se você não sabe o que são estes recursos, pode perguntar à professora e/ou aos moni-
 tores como eles funcionam, apenas por curiosidade. Também é proibido: o uso do comando #define
