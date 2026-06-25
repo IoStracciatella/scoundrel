@@ -1,6 +1,6 @@
-# Com o objetivo de promover boas práticas de programação, é expressamente proibida a
+# Projeto de Jogo de Scoundrel
 
-utilização dos seguintes recursos de programação: comando goto, comando continue, co-
+A utilização dos seguintes recursos de programação: comando goto, comando continue, co-
 mando break e variáveis globais. É permitido o uso do comando break somente junto ao comando
 
 switch-case. Se você não sabe o que são estes recursos, pode perguntar à professora e/ou aos moni-
