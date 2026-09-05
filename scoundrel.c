@@ -31,10 +31,10 @@ Comentário adicional:
 O código não ficou tão bom quanto eu gostaria. Mesmo eu dando meu melhor. Só que eu não usei ChatGPT, não usei Gemini, não usei deepseek nem ne-
 -nhuma IA. Eu esto falando isso porque acho que esse mérito deveria ser considerado. Boa parte da sala nem vai ler o enunciado, só vai jogar o
 PDF da atividade em alguma IA copiar e colar o código que a IA fizer e te entregar. O problema é que esses códigos feitos por IA vão ficar per-
--feitos, super otimizados, indentados perfeitamente, etc. A qualidade do código médio que a sala vai entregar vai subir, MUITO, e meu código,
-na contramão, não é perfeito. Comparado a um código feito por IA, ou com ajuda de IA, meu código deve ter ficado tosco. Mas peço que seja consi-
--derado meu esforço. Peço que seja considerado que o código foi feito 100% por um ser humano (eu). Não quero nota adicional por isso, só quero
-não perder nota porque o código médio da sala ficou perfeito, porque boa parte das pessoas usou IA.
+-feitos, super otimizados, indentados perfeitamente, etc. Em média, a qualidade dos códigos que a sala vai entregar vai subir. Muito. Meu código,
+na contramão, não é perfeito. Comparado a um código feito por IA, ou com ajuda de IA, ele é tosco. Mas peço que seja considerado meu esforço.
+Peço que seja considerado que o código foi feito 100% por um ser humano (eu). Não quero nota adicional por isso, só não quero perder nota pelo
+fato do meu código não ser perfeito em comparação aos códigos do resto da sala, porque boa parte das pessoas usou IA.
 */
 
 #include <stdio.h>
