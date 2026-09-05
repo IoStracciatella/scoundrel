@@ -1,5 +1,6 @@
 /*
-Vou explicar de forma breve como o código funciona com um textinho aqui em cima, porque eu me perdi com os comentários (muita coisa pra explicar)
+Vou explicar de forma breve como o código funciona com um textinho aqui em cima, porque me perdi com os comentários ao longo do código, muita
+coisa pra explicar.
 
 O jogo começa assim: Um struct que define o que uma carta armazena é criado, depois um array desse scruct é criado. Esse array contém as cartas
 numeradas de 2 a 14 para paus e espadas, e de 2 a 10 para ouros e copas. Os naipes são definidos por número de 0 a 3, 0 = paus, 1 = espadas, 2 =
