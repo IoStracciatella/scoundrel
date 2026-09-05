@@ -22,17 +22,18 @@ usuário não interagiu, então ela vai pra proxima sala. Caso o usuário tenha 
 elas no fim do baralho, e estende o fim do baralho. Caso os valores que o usuário inseriu sejam inválidos, o programa vai ficar pedindo pra inse-
 rir o valor até ele colocar um valor certo. Se pos_cartas for maior que fim_bar, pronto, o usuário ganhou, porque passou do fim do baralho. 
 Quando ele ganha, o programa acaba e a vida do jogador é a pontuação. Esqueci de falar antes, mas caso o jogador perca, o programa varre o bara-
-lho para identificar monstros e subtrair a vida de todos eles da vida do usuário. Essa é a pontuação caso você perca. Foi difícil fazer esse tra-
-balho. Meu Deus.
+lho para identificar monstros e subtrair a vida de todos eles da vida do usuário. Essa é a pontuação caso você perca.
+
+Como Foi difícil fazer esse trabalho, meu Deus.
 
 Comentário adicional:
-O código ficou horrível. Mesmo eu dando meu melhor. Só que eu não usei GPT, não usei Gemini, não usei deepseek nem nenhuma IA. Eu to falando isso
-porque eu acho que esse mérito deveria ser considerado. Boa parte da sala nem vai ler o enunciado, só vai jogar o PDF da atividade em alguma IA
-copiar e colar o código que a IA fizer e te entregar. O problema é que esses códigos feitos por IA vão ficar perfeitos, super otimizados, inden-
--tados perfeitamente, etc. A qualidade do código médio que a sala vai entregar vai subir, MUITO, e meu código, na contramão, não é perfeito. Com-
-parado a um código feito por IA, ou com ajuda de IA, meu código deve ter ficado tosco. Mas peço que seja considerado meu esforço. Peço que seja
-considerado que o código foi feito 100% por um ser humano (eu). Não quero nota adicional por isso, só quero não perder nota porque o código médio
-da sala ficou perfeito, porque boa parte das pessoas usou IA
+O código não ficou tão bom quanto eu gostaria. Mesmo eu dando meu melhor. Só que eu não usei ChatGPT, não usei Gemini, não usei deepseek nem ne-
+-nhuma IA. Eu esto falando isso porque acho que esse mérito deveria ser considerado. Boa parte da sala nem vai ler o enunciado, só vai jogar o
+PDF da atividade em alguma IA copiar e colar o código que a IA fizer e te entregar. O problema é que esses códigos feitos por IA vão ficar per-
+-feitos, super otimizados, indentados perfeitamente, etc. A qualidade do código médio que a sala vai entregar vai subir, MUITO, e meu código,
+na contramão, não é perfeito. Comparado a um código feito por IA, ou com ajuda de IA, meu código deve ter ficado tosco. Mas peço que seja consi-
+-derado meu esforço. Peço que seja considerado que o código foi feito 100% por um ser humano (eu). Não quero nota adicional por isso, só quero
+não perder nota porque o código médio da sala ficou perfeito, porque boa parte das pessoas usou IA.
 */
 
 #include <stdio.h>
